@@ -200,7 +200,7 @@ namespace ScootBot
             }
             else
             {
-                return "playlist not found";
+                return "playlist not found or empty";
             }
         }
 
