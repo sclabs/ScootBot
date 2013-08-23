@@ -169,7 +169,7 @@ namespace ScootBot
             }
             
             // prevent hax for dayz
-            if (result.StartsWith("/leave"))
+            if (result.TrimStart().StartsWith("/leave"))
             {
                 return;
             }
@@ -210,7 +210,15 @@ namespace ScootBot
             string jsonResponse = GetJSONData(url);
             dynamic response = JsonConvert.DeserializeObject(jsonResponse);
             dynamic quotelist = response.result;
-            return quotelist[random.Next(quotelist.Count)];
+            string result = quotelist[random.Next(quotelist.Count)];
+            if (result.TrimStart().StartsWith("!"))
+            {
+                while (result.TrimStart().StartsWith("!"))
+                {
+                    result = result.Substring(1);
+                }
+            }
+            return result;
         }
 
         private static void AddMatches(List<string> matches, int steamid)
