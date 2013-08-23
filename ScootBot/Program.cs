@@ -127,6 +127,12 @@ namespace ScootBot
                 case "ndsay":
                     result = Say("0AlnL_8vlPlmWdGY4NUF5MjNDcTdPamxjYkdNVEJ5X2c");
                     break;
+                case "gilgisay":
+                    result = Say("0AlnL_8vlPlmWdE5uVVBGV2tOaDA5YzdpbHhNQ0dtaWc");
+                    break;
+                case "kwintsay":
+                    result = Say("0AlnL_8vlPlmWdEJ2SzQ1ZEpPUHUxUGhwdUtBMFIzRXc");
+                    break;
                 case "spacesay":
                     result = Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)];
                     break;
