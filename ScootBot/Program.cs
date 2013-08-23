@@ -131,12 +131,10 @@ namespace ScootBot
                     result = Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)];
                     break;
                 case "jukebox":
-                    string url = "https://script.google.com/macros/s/AKfycbydxbcsd0FNJzZBGYczJHyuY7ScKa-dXe36EdvuUt4fdtgiVFk/exec";
-                    string jsonResponse = GetJSONData(url);
-                    dynamic response = JsonConvert.DeserializeObject(jsonResponse);
-                    dynamic songlist = response.result;
-                    dynamic song = songlist[random.Next(songlist.Count)];
-                    result = song.track + " by " + song.artist + " on playlist " + song.playlist + ": " + song.link;
+                    result = JukeBox();
+                    break;
+                case "jb":
+                    result = JukeBox();
                     break;
                 default:
                     if (command.StartsWith("pickone ") && command.Contains(" or "))
@@ -161,6 +159,16 @@ namespace ScootBot
             }
 
             msg.Chat.SendMessage(result);
+        }
+
+        private static string JukeBox()
+        {
+            string url = "https://script.google.com/macros/s/AKfycbydxbcsd0FNJzZBGYczJHyuY7ScKa-dXe36EdvuUt4fdtgiVFk/exec";
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            dynamic songlist = response.result;
+            dynamic song = songlist[random.Next(songlist.Count)];
+            return song.track + " by " + song.artist + " on playlist " + song.playlist + ": " + song.link;
         }
 
         private static void AddMatches(List<string> matches, int steamid)
