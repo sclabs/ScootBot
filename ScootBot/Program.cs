@@ -154,6 +154,13 @@ namespace ScootBot
                     }
                     return;
             }
+            
+            // prevent hax for dayz
+            if (result.StartsWith("/leave"))
+            {
+                return;
+            }
+
             msg.Chat.SendMessage(result);
         }
 
