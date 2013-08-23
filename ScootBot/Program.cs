@@ -17,7 +17,6 @@ namespace ScootBot
     {
         private static Skype skype;
         private const string trigger = "!";
-        //private const string nick = "ScootBot";
         private static Random random = new Random();
 
         static void Main(string[] args)
@@ -163,11 +162,6 @@ namespace ScootBot
 
             msg.Chat.SendMessage(result);
         }
-
-        //private static void SendMessage(ChatMessage msg, string result)
-        //{
-        //    msg.Chat.SendMessage(nick + " Says: " + result);
-        //}
 
         private static void AddMatches(List<string> matches, int steamid)
         {
