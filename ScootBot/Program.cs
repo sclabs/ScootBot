@@ -142,14 +142,20 @@ namespace ScootBot
                         string meat = command.Substring(8);
                         string[] pieces = Regex.Split(meat, " or ");
                         result = pieces[random.Next(pieces.Length)];
-                        break;
                     }
                     else if (command.StartsWith("8ball "))
                     {
                         result = Quotes.ballResults[random.Next(Quotes.ballResults.Length)];
-                        break;
                     }
-                    return;
+                    else if (command.StartsWith("echo "))
+                    {
+                        result = command.Split(new Char[] { ' ' }, 2)[1];
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
             }
             
             // prevent hax for dayz
