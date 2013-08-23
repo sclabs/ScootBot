@@ -151,6 +151,10 @@ namespace ScootBot
                     {
                         result = command.Split(new Char[] { ' ' }, 2)[1];
                     }
+                    else if (command.StartsWith("jukebox ") || command.StartsWith("jb "))
+                    {
+                        result = JukeBox(command.Split(new Char[] { ' ' }, 2)[1]);
+                    }
                     else
                     {
                         return;
@@ -175,6 +179,23 @@ namespace ScootBot
             dynamic songlist = response.result;
             dynamic song = songlist[random.Next(songlist.Count)];
             return song.track + " by " + song.artist + " on playlist " + song.playlist + ": " + song.link;
+        }
+
+        private static string JukeBox(string playlist)
+        {
+            string url = "https://script.google.com/macros/s/AKfycby-RHeBmakw97UVnNGIB0UEwBFiJAydIHfvDupwJgA4kaKHVUg/exec?playlist=" + playlist;
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            if ((bool) response.ok)
+            {
+                dynamic songlist = response.result;
+                dynamic song = songlist[random.Next(songlist.Count)];
+                return song.track + " by " + song.artist + ": " + song.link;
+            }
+            else
+            {
+                return "playlist not found";
+            }
         }
 
         private static string Say(string id)
