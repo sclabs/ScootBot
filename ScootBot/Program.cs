@@ -122,10 +122,10 @@ namespace ScootBot
                     result = "http://dotabuff.com/matches/" + vindicator_matchids[random.Next(vindicator_matchids.Count)];
                     break;
                 case "tritzsay":
-                    result = Quotes.tritzResults[random.Next(Quotes.tritzResults.Length)];
+                    result = Say("0AlnL_8vlPlmWdEhJTHE1NVl2T19Ed0tWd20wSlN6dGc");
                     break;
                 case "ndsay":
-                    result = Quotes.ndResults[random.Next(Quotes.ndResults.Length)];
+                    result = Say("0AlnL_8vlPlmWdGY4NUF5MjNDcTdPamxjYkdNVEJ5X2c");
                     break;
                 case "spacesay":
                     result = Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)];
@@ -175,6 +175,15 @@ namespace ScootBot
             dynamic songlist = response.result;
             dynamic song = songlist[random.Next(songlist.Count)];
             return song.track + " by " + song.artist + " on playlist " + song.playlist + ": " + song.link;
+        }
+
+        private static string Say(string id)
+        {
+            string url = "https://script.google.com/macros/s/AKfycbzbYuok-Ihqm7-QepK73x-GW63GHJG7AHUMvNd7ZBbHFuQRrc8/exec?id=" + id;
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            dynamic quotelist = response.result;
+            return quotelist[random.Next(quotelist.Count)];
         }
 
         private static void AddMatches(List<string> matches, int steamid)

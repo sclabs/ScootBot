@@ -8,19 +8,6 @@ namespace ScootBot
 {
     class Quotes
     {
-        public static string[] tritzResults =  { "I'm the pride of the crew",
-                                                 "Maybe I'll play Kunkka",
-                                                 "My hip hop mixtape release date is TBA!",
-                                                 "Silly rabbit, Tritz is for kids!",
-                                                 "Time for a PCS throwdown!" };
-
-        public static string[] ndResults = { "It's pizza night",
-                                             "Mango?",
-                                             "Meepo!",
-                                             "B Club.",
-                                             "Call me Mr. Fundamentals",
-                                             "Holla holla get dolla" };
-
         public static string[] ballResults = { "It is certain",
                                                "It is decidedly so",
                                                "Without a doubt",
