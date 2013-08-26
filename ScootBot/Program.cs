@@ -133,6 +133,15 @@ namespace ScootBot
                 case "kwintsay":
                     result = Say("0AlnL_8vlPlmWdEJ2SzQ1ZEpPUHUxUGhwdUtBMFIzRXc");
                     break;
+                case "vindisay":
+                    result = Say("0AlnL_8vlPlmWdDVTZFphVVJFdkdGbmZhbGVnUjZrb1E");
+                    break;
+                case "revsay":
+                    result = Say("0AlnL_8vlPlmWdE9fdFNxUVdobWZGTkQtUlZlZFcycXc");
+                    break;
+                case "marksay":
+                    result = Say("0AlnL_8vlPlmWdDVMbU5pblpWSktWSm4wbHF3b2lOSFE");
+                    break;
                 case "spacesay":
                     result = Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)];
                     break;
@@ -141,6 +150,9 @@ namespace ScootBot
                     break;
                 case "jb":
                     result = JukeBox();
+                    break;
+                case "draft":
+                    result = Draft("allheroes");
                     break;
                 default:
                     if (command.StartsWith("pickone ") && command.Contains(" or "))
@@ -161,6 +173,10 @@ namespace ScootBot
                     {
                         result = JukeBox(command.Split(new Char[] { ' ' }, 2)[1]);
                     }
+                    else if (command.StartsWith("draft "))
+                    {
+                        result = Draft(command.Split(new Char[] { ' ' }, 2)[1]);
+                    }
                     else
                     {
                         return;
@@ -173,7 +189,6 @@ namespace ScootBot
             {
                 return;
             }
-
             msg.Chat.SendMessage(result);
         }
 
@@ -184,7 +199,17 @@ namespace ScootBot
             dynamic response = JsonConvert.DeserializeObject(jsonResponse);
             dynamic songlist = response.result;
             dynamic song = songlist[random.Next(songlist.Count)];
-            return song.track + " by " + song.artist + " on playlist " + song.playlist + ": " + song.link;
+            string result = song.track + " by " + song.artist + " on playlist " + song.playlist + ": " + song.link;
+            return Clean(result);
+        }
+
+        private static string Clean(string input)
+        {
+            while (input.TrimStart().StartsWith("!"))
+            {
+                input = input.Substring(1);
+            }
+            return input;
         }
 
         private static string JukeBox(string playlist)
@@ -196,11 +221,37 @@ namespace ScootBot
             {
                 dynamic songlist = response.result;
                 dynamic song = songlist[random.Next(songlist.Count)];
-                return song.track + " by " + song.artist + ": " + song.link;
+                string result = song.track + " by " + song.artist + ": " + song.link;
+                return Clean(result);
             }
             else
             {
                 return "playlist not found or empty";
+            }
+        }
+
+        private static string Draft(string list)
+        {
+            if (list.Contains(" ")) {
+                string[] pieces = list.Split(new Char[] { ' ' });
+                list = String.Join("_", pieces);
+            }
+            string url = "https://script.google.com/macros/s/AKfycbxda9wYE7V3h_XSWgY4EtadDP6TDcT82gpIVejQgLxMfCXjC6rs/exec?herolist=" + list;
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            if ((bool) response.ok)
+            {
+                dynamic herolist = response.result;
+                if (herolist.Count == 0)
+                {
+                    return "no heroes match your criteria";
+                }
+                string result = herolist[random.Next(herolist.Count)];
+                return Clean(result);
+            }
+            else
+            {
+                return "herolist not found or empty";
             }
         }
 
@@ -211,14 +262,7 @@ namespace ScootBot
             dynamic response = JsonConvert.DeserializeObject(jsonResponse);
             dynamic quotelist = response.result;
             string result = quotelist[random.Next(quotelist.Count)];
-            if (result.TrimStart().StartsWith("!"))
-            {
-                while (result.TrimStart().StartsWith("!"))
-                {
-                    result = result.Substring(1);
-                }
-            }
-            return result;
+            return Clean(result);
         }
 
         private static void AddMatches(List<string> matches, int steamid)
