@@ -73,17 +73,19 @@ namespace ScootBot
                     result = "LEEDLE LEEDLE LEEDLE";
                     break;
                 case "stardate":
-                    DateTime utcNow = DateTime.Now.AddHours(-2);
-                    double century = Math.Floor(utcNow.Year / 100.0);
-                    double starCentury = century - 19.0; //Hack: In order to keep it consistent with Star Trek
-                    double starYear = utcNow.Year - (century * 100.00);
-                    double starDay = (utcNow.DayOfYear * 24.0) + utcNow.Hour;
-                    double totalHoursInYear = (DateTime.IsLeapYear(utcNow.Year) ? 366 : 365) * 24;
-                    double starDate = (starCentury * 10000.0) + (starYear * 100) + (starDay * 100.0 / totalHoursInYear);
+                    DateTime utcNow = DateTime.Now.AddHours(5);
+                    //double century = Math.Floor(utcNow.Year / 100.0);
+                    //double starCentury = century - 19.0; //Hack: In order to keep it consistent with Star Trek
+                    ////double starCentury = century;
+                    //double starYear = utcNow.Year - (century * 100.00);
+                    //double starDay = (utcNow.DayOfYear * 24.0) + utcNow.Hour;
+                    //double totalHoursInYear = (DateTime.IsLeapYear(utcNow.Year) ? 366 : 365) * 24;
+                    //double starDate = (starCentury * 10000.0) + (starYear * 100) + (starDay * 100.0 / totalHoursInYear);'
+                    string starDate = utcNow.Year.ToString() + '.' + utcNow.DayOfYear.ToString();
                     result = "the current stardate is " + starDate;
                     break;
                 case "evetime":
-                    result = "the current evetime is " + DateTime.Now.AddHours(-2).ToString("HH:mm:ss"); ;
+                    result = "the current evetime is " + DateTime.Now.AddHours(5).ToString("HH:mm:ss"); ;
                     break;
                 case "dotabuff":
                     List<string> matchids = new List<string>();
@@ -91,9 +93,9 @@ namespace ScootBot
                     AddMatches(matchids, 60514096); // boss man papa smurf
                     AddMatches(matchids, 34814716); // slapchop
                     AddMatches(matchids, 63826936); // manlytomb
-                    //AddMatches(matchids, 59311372); // holiday
+                    AddMatches(matchids, 59311372); // holiday
                     AddMatches(matchids, 37784737); // teem capten marten gelganst
-                    //AddMatches(matchids, 47374215); // kwint
+                    AddMatches(matchids, 47374215); // kwint
                     result = "http://dotabuff.com/matches/" + matchids[random.Next(matchids.Count)];
                     break;
                 case "dotabuff tritz":
@@ -111,7 +113,7 @@ namespace ScootBot
                     AddMatches(nd_matchids, 34814716); // slapchop
                     result = "http://dotabuff.com/matches/" + nd_matchids[random.Next(nd_matchids.Count)];
                     break;
-                case "dotabuff papa smurf":
+                case "dotabuff mark":
                     List<string> smurf_matchids = new List<string>();
                     AddMatches(smurf_matchids, 60514096); // boss man papa smurf
                     result = "http://dotabuff.com/matches/" + smurf_matchids[random.Next(smurf_matchids.Count)];
@@ -120,6 +122,16 @@ namespace ScootBot
                     List<string> vindicator_matchids = new List<string>();
                     AddMatches(vindicator_matchids, 37784737); // teem capten marten gelganst
                     result = "http://dotabuff.com/matches/" + vindicator_matchids[random.Next(vindicator_matchids.Count)];
+                    break;
+                case "dotabuff kwint":
+                    List<string> kwint_matchids = new List<string>();
+                    AddMatches(kwint_matchids, 47374215); // kwint
+                    result = "http://dotabuff.com/matches/" + kwint_matchids[random.Next(kwint_matchids.Count)];
+                    break;
+                case "dotabuff sehi":
+                    List<string> sehi_matchids = new List<string>();
+                    AddMatches(sehi_matchids, 59311372); // sehi
+                    result = "http://dotabuff.com/matches/" + sehi_matchids[random.Next(sehi_matchids.Count)];
                     break;
                 case "tritzsay":
                     result = Say("0AlnL_8vlPlmWdEhJTHE1NVl2T19Ed0tWd20wSlN6dGc");
@@ -136,11 +148,17 @@ namespace ScootBot
                 case "vindisay":
                     result = Say("0AlnL_8vlPlmWdDVTZFphVVJFdkdGbmZhbGVnUjZrb1E");
                     break;
-                case "revsay":
+                case "sehisay":
                     result = Say("0AlnL_8vlPlmWdE9fdFNxUVdobWZGTkQtUlZlZFcycXc");
                     break;
                 case "marksay":
                     result = Say("0AlnL_8vlPlmWdDVMbU5pblpWSktWSm4wbHF3b2lOSFE");
+                    break;
+                case "tksay":
+                    result = Say("1-Wb6wUqoFDKmdTHBIEeFa4zObk1soQRKodcCnm3SlvE");
+                    break;
+                case "lamsay":
+                    result = Say("1vMZlG-8QoeO4y-O5YY7leULJ7vUfRMdR35hHA0hv2rY");
                     break;
                 case "spacesay":
                     result = Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)];
