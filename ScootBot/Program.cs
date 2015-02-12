@@ -53,24 +53,25 @@ namespace ScootBot
         private static void ProcessCommand(ChatMessage msg, string command)
         {
             // process command
-            string result;
+            List<string> result = new List<string>();
             switch (command)
             {
                 case "sayhi":
-                    result = "hi";
+                    result.Add("hi");
                     break;
                 case "rtd":
                     int diceNumber = random.Next(6) + 1;
-                    result = diceNumber.ToString();
+                    result.Add(diceNumber.ToString());
                     break;
                 case "flipcoin":
-                    result = "";
+                    string tempResult = "";
                     int coinNumber = random.Next(2);
-                    if (coinNumber == 0) { result = "heads"; }
-                    else { result = "tails"; }
+                    if (coinNumber == 0) { tempResult = "heads"; }
+                    else { tempResult = "tails"; }
+                    result.Add(tempResult);
                     break;
                 case "dota":
-                    result = "LEEDLE LEEDLE LEEDLE";
+                    result.Add("LEEDLE LEEDLE LEEDLE");
                     break;
                 case "stardate":
                     DateTime utcNow = DateTime.Now.AddHours(5);
@@ -82,10 +83,10 @@ namespace ScootBot
                     //double totalHoursInYear = (DateTime.IsLeapYear(utcNow.Year) ? 366 : 365) * 24;
                     //double starDate = (starCentury * 10000.0) + (starYear * 100) + (starDay * 100.0 / totalHoursInYear);'
                     string starDate = utcNow.Year.ToString() + '.' + utcNow.DayOfYear.ToString();
-                    result = "the current stardate is " + starDate;
+                    result.Add("the current stardate is " + starDate);
                     break;
                 case "evetime":
-                    result = "the current evetime is " + DateTime.Now.AddHours(5).ToString("HH:mm:ss"); ;
+                    result.Add("the current evetime is " + DateTime.Now.AddHours(5).ToString("HH:mm:ss"));
                     break;
                 case "dotabuff":
                     List<string> matchids = new List<string>();
@@ -96,104 +97,108 @@ namespace ScootBot
                     AddMatches(matchids, 59311372); // holiday
                     AddMatches(matchids, 37784737); // teem capten marten gelganst
                     AddMatches(matchids, 47374215); // kwint
-                    result = "http://dotabuff.com/matches/" + matchids[random.Next(matchids.Count)];
+                    result.Add("http://dotabuff.com/matches/" + matchids[random.Next(matchids.Count)]);
                     break;
                 case "dotabuff tritz":
                     List<string> tritz_matchids = new List<string>();
                     AddMatches(tritz_matchids, 63826936); // manlytomb
-                    result = "http://dotabuff.com/matches/" + tritz_matchids[random.Next(tritz_matchids.Count)];
+                    result.Add("http://dotabuff.com/matches/" + tritz_matchids[random.Next(tritz_matchids.Count)]);
                     break;
                 case "dotabuff gilgi":
                     List<string> gilgi_matchids = new List<string>();
                     AddMatches(gilgi_matchids, 30545806); // gilgi
-                    result = "http://dotabuff.com/matches/" + gilgi_matchids[random.Next(gilgi_matchids.Count)];
+                    result.Add("http://dotabuff.com/matches/" + gilgi_matchids[random.Next(gilgi_matchids.Count)]);
                     break;
                 case "dotabuff nd":
                     List<string> nd_matchids = new List<string>();
                     AddMatches(nd_matchids, 34814716); // slapchop
-                    result = "http://dotabuff.com/matches/" + nd_matchids[random.Next(nd_matchids.Count)];
+                    result.Add("http://dotabuff.com/matches/" + nd_matchids[random.Next(nd_matchids.Count)]);
                     break;
                 case "dotabuff mark":
                     List<string> smurf_matchids = new List<string>();
                     AddMatches(smurf_matchids, 60514096); // boss man papa smurf
-                    result = "http://dotabuff.com/matches/" + smurf_matchids[random.Next(smurf_matchids.Count)];
+                    result.Add("http://dotabuff.com/matches/" + smurf_matchids[random.Next(smurf_matchids.Count)]);
                     break;
                 case "dotabuff vindicator":
                     List<string> vindicator_matchids = new List<string>();
                     AddMatches(vindicator_matchids, 37784737); // teem capten marten gelganst
-                    result = "http://dotabuff.com/matches/" + vindicator_matchids[random.Next(vindicator_matchids.Count)];
+                    result.Add("http://dotabuff.com/matches/" + vindicator_matchids[random.Next(vindicator_matchids.Count)]);
                     break;
                 case "dotabuff kwint":
                     List<string> kwint_matchids = new List<string>();
                     AddMatches(kwint_matchids, 47374215); // kwint
-                    result = "http://dotabuff.com/matches/" + kwint_matchids[random.Next(kwint_matchids.Count)];
+                    result.Add("http://dotabuff.com/matches/" + kwint_matchids[random.Next(kwint_matchids.Count)]);
                     break;
                 case "dotabuff sehi":
                     List<string> sehi_matchids = new List<string>();
                     AddMatches(sehi_matchids, 59311372); // sehi
-                    result = "http://dotabuff.com/matches/" + sehi_matchids[random.Next(sehi_matchids.Count)];
+                    result.Add("http://dotabuff.com/matches/" + sehi_matchids[random.Next(sehi_matchids.Count)]);
                     break;
                 case "tritzsay":
-                    result = Say("0AlnL_8vlPlmWdEhJTHE1NVl2T19Ed0tWd20wSlN6dGc");
+                    result.Add(Say("0AlnL_8vlPlmWdEhJTHE1NVl2T19Ed0tWd20wSlN6dGc"));
                     break;
                 case "ndsay":
-                    result = Say("0AlnL_8vlPlmWdGY4NUF5MjNDcTdPamxjYkdNVEJ5X2c");
+                    result.Add(Say("0AlnL_8vlPlmWdGY4NUF5MjNDcTdPamxjYkdNVEJ5X2c"));
                     break;
                 case "gilgisay":
-                    result = Say("0AlnL_8vlPlmWdE5uVVBGV2tOaDA5YzdpbHhNQ0dtaWc");
+                    result.Add(Say("0AlnL_8vlPlmWdE5uVVBGV2tOaDA5YzdpbHhNQ0dtaWc"));
                     break;
                 case "kwintsay":
-                    result = Say("0AlnL_8vlPlmWdEJ2SzQ1ZEpPUHUxUGhwdUtBMFIzRXc");
+                    result.Add(Say("0AlnL_8vlPlmWdEJ2SzQ1ZEpPUHUxUGhwdUtBMFIzRXc"));
                     break;
                 case "vindisay":
-                    result = Say("0AlnL_8vlPlmWdDVTZFphVVJFdkdGbmZhbGVnUjZrb1E");
+                    result.Add(Say("0AlnL_8vlPlmWdDVTZFphVVJFdkdGbmZhbGVnUjZrb1E"));
                     break;
                 case "sehisay":
-                    result = Say("0AlnL_8vlPlmWdE9fdFNxUVdobWZGTkQtUlZlZFcycXc");
+                    result.Add(Say("0AlnL_8vlPlmWdE9fdFNxUVdobWZGTkQtUlZlZFcycXc"));
                     break;
                 case "marksay":
-                    result = Say("0AlnL_8vlPlmWdDVMbU5pblpWSktWSm4wbHF3b2lOSFE");
+                    result.Add(Say("0AlnL_8vlPlmWdDVMbU5pblpWSktWSm4wbHF3b2lOSFE"));
                     break;
                 case "tksay":
-                    result = Say("1-Wb6wUqoFDKmdTHBIEeFa4zObk1soQRKodcCnm3SlvE");
+                    result.Add(Say("1-Wb6wUqoFDKmdTHBIEeFa4zObk1soQRKodcCnm3SlvE"));
                     break;
                 case "lamsay":
-                    result = Say("1vMZlG-8QoeO4y-O5YY7leULJ7vUfRMdR35hHA0hv2rY");
+                    result.Add(Say("1vMZlG-8QoeO4y-O5YY7leULJ7vUfRMdR35hHA0hv2rY"));
                     break;
                 case "spacesay":
-                    result = Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)];
+                    result.Add(Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)]);
                     break;
                 case "jukebox":
-                    result = JukeBox();
+                    result.Add(JukeBox());
                     break;
                 case "jb":
-                    result = JukeBox();
+                    result.Add(JukeBox());
                     break;
                 case "draft":
-                    result = Draft("allheroes");
+                    result.Add(Draft("allheroes"));
                     break;
                 default:
                     if (command.StartsWith("pickone ") && command.Contains(" or "))
                     {
                         string meat = command.Substring(8);
                         string[] pieces = Regex.Split(meat, " or ");
-                        result = pieces[random.Next(pieces.Length)];
+                        result.Add(pieces[random.Next(pieces.Length)]);
                     }
                     else if (command.StartsWith("8ball "))
                     {
-                        result = Quotes.ballResults[random.Next(Quotes.ballResults.Length)];
+                        result.Add(Quotes.ballResults[random.Next(Quotes.ballResults.Length)]);
                     }
                     else if (command.StartsWith("echo "))
                     {
-                        result = command.Split(new Char[] { ' ' }, 2)[1];
+                        result.Add(command.Split(new Char[] { ' ' }, 2)[1]);
                     }
                     else if (command.StartsWith("jukebox ") || command.StartsWith("jb "))
                     {
-                        result = JukeBox(command.Split(new Char[] { ' ' }, 2)[1]);
+                        result.Add(JukeBox(command.Split(new Char[] { ' ' }, 2)[1]));
                     }
                     else if (command.StartsWith("draft "))
                     {
-                        result = Draft(command.Split(new Char[] { ' ' }, 2)[1]);
+                        result.Add(Draft(command.Split(new Char[] { ' ' }, 2)[1]));
+                    }
+                    else if (command.StartsWith("wolfram "))
+                    {
+                        result = Wolfram(command.Split(new Char[] { ' ' }, 2)[1]);
                     }
                     else
                     {
@@ -201,13 +206,38 @@ namespace ScootBot
                     }
                     break;
             }
-            
-            // prevent hax for dayz
-            if (result.TrimStart().StartsWith("/leave"))
+         
+            foreach (string resultMessage in result)
             {
-                return;
+                // prevent hax for dayz
+                if (resultMessage.TrimStart().StartsWith("/leave"))
+                {
+                    return;
+                }
+                msg.Chat.SendMessage(resultMessage);
             }
-            msg.Chat.SendMessage(result);
+        }
+
+        private static List<string> Wolfram(string query)
+        {
+            string url = "https://script.google.com/macros/s/AKfycbyRab1qtHahFG8jYmWRVETiQJ6ERaJRiAzl6mhpSjg268do14E/exec?query=" + query;
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            if ((bool)response.ok)
+            {
+                dynamic results = response.result;
+                List<string> result = new List<string>();
+                foreach (string resultMessage in results) {
+                    result.Add(Clean(resultMessage));
+                }
+                return result;
+            }
+            else
+            {
+                List<string> result = new List<string>();
+                result.Add("something failed");
+                return result;
+            }
         }
 
         private static string JukeBox()
