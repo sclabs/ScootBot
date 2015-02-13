@@ -97,42 +97,50 @@ namespace ScootBot
                     AddMatches(matchids, 59311372); // holiday
                     AddMatches(matchids, 37784737); // teem capten marten gelganst
                     AddMatches(matchids, 47374215); // kwint
-                    result.Add("http://dotabuff.com/matches/" + matchids[random.Next(matchids.Count)]);
+                    //result.Add("http://dotabuff.com/matches/" + matchids[random.Next(matchids.Count)]);
+                    result.Add("http://dotabuff.com/matches/" + matchids[0]);
                     break;
                 case "dotabuff tritz":
                     List<string> tritz_matchids = new List<string>();
                     AddMatches(tritz_matchids, 63826936); // manlytomb
-                    result.Add("http://dotabuff.com/matches/" + tritz_matchids[random.Next(tritz_matchids.Count)]);
+                    //result.Add("http://dotabuff.com/matches/" + tritz_matchids[random.Next(tritz_matchids.Count)]);
+                    result.Add("http://dotabuff.com/matches/" + tritz_matchids[0]);
                     break;
                 case "dotabuff gilgi":
                     List<string> gilgi_matchids = new List<string>();
                     AddMatches(gilgi_matchids, 30545806); // gilgi
-                    result.Add("http://dotabuff.com/matches/" + gilgi_matchids[random.Next(gilgi_matchids.Count)]);
+                    //result.Add("http://dotabuff.com/matches/" + gilgi_matchids[random.Next(gilgi_matchids.Count)]);
+                    result.Add("http://dotabuff.com/matches/" + gilgi_matchids[0]);
                     break;
                 case "dotabuff nd":
                     List<string> nd_matchids = new List<string>();
                     AddMatches(nd_matchids, 34814716); // slapchop
-                    result.Add("http://dotabuff.com/matches/" + nd_matchids[random.Next(nd_matchids.Count)]);
+                    //result.Add("http://dotabuff.com/matches/" + nd_matchids[random.Next(nd_matchids.Count)]);
+                    result.Add("http://dotabuff.com/matches/" + nd_matchids[0]);
                     break;
                 case "dotabuff mark":
                     List<string> smurf_matchids = new List<string>();
                     AddMatches(smurf_matchids, 60514096); // boss man papa smurf
-                    result.Add("http://dotabuff.com/matches/" + smurf_matchids[random.Next(smurf_matchids.Count)]);
+                    //result.Add("http://dotabuff.com/matches/" + smurf_matchids[random.Next(smurf_matchids.Count)]);
+                    result.Add("http://dotabuff.com/matches/" + smurf_matchids[0]);
                     break;
-                case "dotabuff vindicator":
+                case "dotabuff vindi":
                     List<string> vindicator_matchids = new List<string>();
                     AddMatches(vindicator_matchids, 37784737); // teem capten marten gelganst
-                    result.Add("http://dotabuff.com/matches/" + vindicator_matchids[random.Next(vindicator_matchids.Count)]);
+                    //result.Add("http://dotabuff.com/matches/" + vindicator_matchids[random.Next(vindicator_matchids.Count)]);
+                    result.Add("http://dotabuff.com/matches/" + vindicator_matchids[0]);
                     break;
                 case "dotabuff kwint":
                     List<string> kwint_matchids = new List<string>();
                     AddMatches(kwint_matchids, 47374215); // kwint
-                    result.Add("http://dotabuff.com/matches/" + kwint_matchids[random.Next(kwint_matchids.Count)]);
+                    //result.Add("http://dotabuff.com/matches/" + kwint_matchids[random.Next(kwint_matchids.Count)]);
+                    result.Add("http://dotabuff.com/matches/" + kwint_matchids[0]);
                     break;
                 case "dotabuff sehi":
                     List<string> sehi_matchids = new List<string>();
                     AddMatches(sehi_matchids, 59311372); // sehi
-                    result.Add("http://dotabuff.com/matches/" + sehi_matchids[random.Next(sehi_matchids.Count)]);
+                    //result.Add("http://dotabuff.com/matches/" + sehi_matchids[random.Next(sehi_matchids.Count)]);
+                    result.Add("http://dotabuff.com/matches/" + sehi_matchids[0]);
                     break;
                 case "tritzsay":
                     result.Add(Say("0AlnL_8vlPlmWdEhJTHE1NVl2T19Ed0tWd20wSlN6dGc"));
