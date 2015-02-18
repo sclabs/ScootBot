@@ -225,8 +225,9 @@ namespace ScootBot
                 {
                     return;
                 }
-                msg.Chat.SendMessage(resultMessage);
+                //msg.Chat.SendMessage(resultMessage);
             }
+            msg.Chat.SendMessage(String.Join("\n", result));
         }
 
         private static string SwiftSay()
