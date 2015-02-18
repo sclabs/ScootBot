@@ -172,6 +172,9 @@ namespace ScootBot
                 case "spacesay":
                     result.Add(Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)]);
                     break;
+                case "swiftsay":
+                    result.Add(SwiftSay());
+                    break;
                 case "jukebox":
                     result.Add(JukeBox());
                     break;
@@ -224,6 +227,16 @@ namespace ScootBot
                 }
                 msg.Chat.SendMessage(resultMessage);
             }
+        }
+
+        private static string SwiftSay()
+        {
+            string url = "https://script.google.com/macros/s/AKfycbxJhcuk6P6JG0B1YzofwNUoWSQ8yQ-QGvcgcDfloQqF5Vc1JBw/exec";
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            dynamic tweetlist = response.result;
+            dynamic tweet = tweetlist[random.Next(tweetlist.Count)];
+            return tweet;
         }
 
         private static List<string> Wolfram(string query)
