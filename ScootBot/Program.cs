@@ -181,6 +181,12 @@ namespace ScootBot
                 case "jb":
                     result.Add(JukeBox());
                     break;
+                case "aotd":
+                    result.Add(Aotd());
+                    break;
+                case "aotd throwback":
+                    result.Add(AotdThrowback());
+                    break;
                 case "draft":
                     result.Add(Draft("allheroes"));
                     break;
@@ -238,6 +244,28 @@ namespace ScootBot
             dynamic tweetlist = response.result;
             dynamic tweet = tweetlist[random.Next(tweetlist.Count)];
             return tweet;
+        }
+
+        private static string AotdThrowback()
+        {
+            string url = "https://script.google.com/macros/s/AKfycbxZe3OukuZO20ahND9o4mgauaKA7dfFAgjPMFiObc6aYFISO-JQ/exec";
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            dynamic aotds = response.result;
+            dynamic aotd = aotds[random.Next(aotds.Count - 1)];
+            string result = aotd.album + " by " + aotd.artist + " (selected by " + aotd.selectedBy + " on " + aotd.date.ToString("MM/dd/yy") + "): " + aotd.link;
+            return Clean(result);
+        }
+
+        private static string Aotd()
+        {
+            string url = "https://script.google.com/macros/s/AKfycbxZe3OukuZO20ahND9o4mgauaKA7dfFAgjPMFiObc6aYFISO-JQ/exec";
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            dynamic aotds = response.result;
+            dynamic aotd = aotds[aotds.Count-1];
+            string result = aotd.album + " by " + aotd.artist + " (selected by " + aotd.selectedBy + " on " + aotd.date.ToString("MM/dd/yy") + "): " + aotd.link;
+            return Clean(result);
         }
 
         private static List<string> Wolfram(string query)
