@@ -187,6 +187,9 @@ namespace ScootBot
                 case "aotd throwback":
                     result.Add(AotdThrowback());
                     break;
+                case "aotd spreadsheet":
+                    result.Add("https://docs.google.com/spreadsheets/d/1vA8z1uV6LLDmcSYty8toxYGF1ZcYGdnbQoBzuAqb92U");
+                    break;
                 case "draft":
                     result.Add(Draft("allheroes"));
                     break;
