@@ -217,6 +217,10 @@ namespace ScootBot
                     {
                         result = Wolfram(command.Split(new Char[] { ' ' }, 2)[1]);
                     }
+                    else if (command.StartsWith("weather "))
+                    {
+                        result = Wolfram("weather " + command.Split(new Char[] { ' ' }, 2)[1]);
+                    }
                     else
                     {
                         return;
