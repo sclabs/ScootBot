@@ -190,6 +190,23 @@ namespace ScootBot
                 case "aotd spreadsheet":
                     result.Add("https://docs.google.com/spreadsheets/d/1vA8z1uV6LLDmcSYty8toxYGF1ZcYGdnbQoBzuAqb92U");
                     break;
+                case "scp":
+                    int index = random.Next(2108) + 1;
+                    string id = "";
+                    if (index < 10)
+                    {
+                        id = "00" + index.ToString();
+                    }
+                    else if (index < 100)
+                    {
+                        id = "0" + index.ToString();
+                    }
+                    else
+                    {
+                        id = index.ToString();
+                    }
+                    result.Add("http://www.scp-wiki.net/scp-" + id);
+                    break;
                 case "draft":
                     result.Add(Draft("allheroes"));
                     break;
