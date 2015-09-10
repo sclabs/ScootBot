@@ -210,6 +210,9 @@ namespace ScootBot
                 case "draft":
                     result.Add(Draft("allheroes"));
                     break;
+                case "poll":
+                    result = Poll("list", msg.Sender.Handle);
+                    break;
                 default:
                     if (command.StartsWith("pickone ") && command.Contains(" or "))
                     {
@@ -240,6 +243,10 @@ namespace ScootBot
                     else if (command.StartsWith("weather "))
                     {
                         result = Wolfram("weather " + command.Split(new Char[] { ' ' }, 2)[1]);
+                    }
+                    else if (command.StartsWith("poll "))
+                    {
+                        result = Poll(command.Split(new Char[] { ' ' }, 2)[1], msg.Sender.Handle);
                     }
                     else
                     {
@@ -290,6 +297,132 @@ namespace ScootBot
             dynamic aotd = aotds[aotds.Count-1];
             string result = aotd.album + " by " + aotd.artist + " (selected by " + aotd.selectedBy + " on " + aotd.date.ToString("MM/dd/yy") + "): " + aotd.link;
             return Clean(result);
+        }
+
+        private static List<string> Poll(string subcommand, string senderHandle)
+        {
+            List<string> result = new List<string>();
+            int detailIndex = -1;
+            if (subcommand.StartsWith("list"))
+            {
+                // list polls
+                string url = "https://script.google.com/macros/s/AKfycbx6akc0v7fNWU6-s2f4jEGv4pX0ODOVyTlVGf2UMZYchjMVK44/exec";
+                string jsonResponse = GetJSONData(url);
+                dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+                dynamic polls = response.result.polls;
+                foreach (dynamic poll in polls) {
+                    if (! (bool) poll.closed)
+                    {
+                        result.Add(poll.id.ToString() + ") " + poll.question);
+                    }
+                }
+            }
+            else if (subcommand.StartsWith("create "))
+            {
+                // create a new poll
+                string question = subcommand.Substring(7);
+                string url = "https://script.google.com/macros/s/AKfycbx6akc0v7fNWU6-s2f4jEGv4pX0ODOVyTlVGf2UMZYchjMVK44/exec?&command=create&question=" + question + "&handle=" + senderHandle;
+                string jsonResponse = GetJSONData(url);
+                dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+                string message = response.result.message;
+                result.Add(message);
+            }
+            else if (subcommand.StartsWith("vote "))
+            {
+                // vote in a poll
+                string[] pieces = subcommand.Split(' ');
+                int pollId = -1;
+                if (Int32.TryParse(pieces[1], out pollId))
+                {
+                    // put the answer back together
+                    string answer = "";
+                    for (int i = 2; i < pieces.Length; i++)
+                    {
+                        answer += pieces[i];
+                    }
+                    answer = answer.Trim();
+
+                    // call the web service
+                    string url = "https://script.google.com/macros/s/AKfycbx6akc0v7fNWU6-s2f4jEGv4pX0ODOVyTlVGf2UMZYchjMVK44/exec?&command=vote&answer=" + answer + "&handle=" + senderHandle + "&id=" + pollId;
+                    string jsonResponse = GetJSONData(url);
+                    dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+                    string message = response.result.message;
+                    result.Add(message);
+                }
+            }
+            else if ((subcommand.StartsWith("detail ") && Int32.TryParse(subcommand.Substring(7), out detailIndex)) || Int32.TryParse(subcommand, out detailIndex))
+            {
+                // get details about a poll
+                // get data from the spreadsheet
+                string url = "https://script.google.com/macros/s/AKfycbx6akc0v7fNWU6-s2f4jEGv4pX0ODOVyTlVGf2UMZYchjMVK44/exec";
+                string jsonResponse = GetJSONData(url);
+                dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+                dynamic polls = response.result.polls;
+                List<string> voters = response.result.voters.ToObject<List<string>>();
+
+                // see if we can find the poll requested
+                dynamic selectedPoll = null;
+                foreach (dynamic poll in polls)
+                {
+                    if (poll.id == detailIndex)
+                    {
+                        selectedPoll = poll;
+                        break;
+                    }
+                }
+                // we found the poll
+                if (selectedPoll != null)
+                {
+                    // first line should be the question
+                    string question = selectedPoll.question;
+                    string id = selectedPoll.id.ToString();
+                    result.Add(id + ") " + question);
+
+                    // collate the results
+                    Dictionary<string, Int32> answers = new Dictionary<string, Int32>();
+                    int totalVotes = 0;
+                    foreach (string voter in voters)
+                    {
+                        // figure out what this voter voted for
+                        string vote = selectedPoll.votes[voter].ToString();
+
+                        // empty strings aren't votes
+                        if (vote != "")
+                        {
+                            // increment the total votes count
+                            totalVotes++;
+
+                            // this option has been seen before, so increment it
+                            if (answers.ContainsKey(vote))
+                            {
+                                answers[vote]++;
+                            }
+                            // this option hasn't been seen before, so add it to the dictionary
+                            else
+                            {
+                                answers.Add(vote, 1);
+                            }
+                        }
+                    }
+
+                    // print the results
+                    foreach (string answer in answers.Keys)
+                    {
+                        int percentage = (int) (answers[answer] * 100 / (float) totalVotes);
+                        result.Add(answers[answer].ToString() + " (" + percentage.ToString() + "%) " + answer);
+                    }
+                }
+                // we didn't find the poll
+                else
+                {
+                    result.Add("poll with id " + detailIndex + " not found");
+                }
+            }
+            else if (subcommand.StartsWith("close "))
+            {
+                // close a poll
+            }
+            return result;
         }
 
         private static List<string> Wolfram(string query)
