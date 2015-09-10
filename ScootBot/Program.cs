@@ -339,6 +339,7 @@ namespace ScootBot
                     for (int i = 2; i < pieces.Length; i++)
                     {
                         answer += pieces[i];
+                        answer += " ";
                     }
                     answer = answer.Trim();
 
