@@ -327,6 +327,18 @@ namespace ScootBot
                 string message = response.result.message;
                 result.Add(message);
             }
+            else if (subcommand.StartsWith("help"))
+            {
+                // create a new poll
+                string message =
+@"scootbot poll help:
+!poll = list all polls
+!poll <id> = get details for a poll
+!poll create <question> = create a new poll
+!poll vote <id> <answer> = vote in a poll
+!poll close <id> = close a poll";
+                result.Add(message);
+            }
             else if (subcommand.StartsWith("vote "))
             {
                 // vote in a poll
@@ -422,6 +434,17 @@ namespace ScootBot
             else if (subcommand.StartsWith("close "))
             {
                 // close a poll
+                string[] pieces = subcommand.Split(' ');
+                int pollId = -1;
+                if (Int32.TryParse(pieces[1], out pollId))
+                {
+                    // call the web service
+                    string url = "https://script.google.com/macros/s/AKfycbx6akc0v7fNWU6-s2f4jEGv4pX0ODOVyTlVGf2UMZYchjMVK44/exec?&command=close&handle=" + senderHandle + "&id=" + pollId;
+                    string jsonResponse = GetJSONData(url);
+                    dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+                    string message = response.result.message;
+                    result.Add(message);
+                }
             }
             return result;
         }
