@@ -169,6 +169,9 @@ namespace ScootBot
                 case "lamsay":
                     result.Add(Say("1vMZlG-8QoeO4y-O5YY7leULJ7vUfRMdR35hHA0hv2rY"));
                     break;
+                case "zuskosay":
+                    result.Add(Say("1F_t5dU33qTKPRo2aJlvnU6VN3-WybgXz-l9ah4RfOXE"));
+                    break;
                 case "spacesay":
                     result.Add(Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)]);
                     break;
