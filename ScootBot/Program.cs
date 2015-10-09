@@ -365,6 +365,11 @@ namespace ScootBot
                     string message = response.result.message;
                     result.Add(message);
                 }
+                else
+                {
+                    string message = "vote failed, consult !poll help for help";
+                    result.Add(message);
+                }
             }
             else if ((subcommand.StartsWith("detail ") && Int32.TryParse(subcommand.Substring(7), out detailIndex)) || Int32.TryParse(subcommand, out detailIndex))
             {
@@ -448,6 +453,11 @@ namespace ScootBot
                     string message = response.result.message;
                     result.Add(message);
                 }
+            }
+            else
+            {
+                string message = "command failed, consult !poll help for help";
+                result.Add(message);
             }
             return result;
         }
