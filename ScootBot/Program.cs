@@ -251,6 +251,10 @@ namespace ScootBot
                     {
                         result = Poll(command.Split(new Char[] { ' ' }, 2)[1], msg.Sender.Handle);
                     }
+                    else if (command.StartsWith("slap "))
+                    {
+                        result = Slap(command.Split(new Char[] { ' ' }, 2)[1], msg.Sender.Handle);
+                    }
                     else
                     {
                         return;
@@ -459,6 +463,18 @@ namespace ScootBot
                 string message = "command failed, consult !poll help for help";
                 result.Add(message);
             }
+            return result;
+        }
+
+        private static List<string> Slap(string target, string senderHandle)
+        {
+            List<string> result = new List<string>();
+            string url = "https://script.google.com/macros/s/AKfycbyM_ikdhPQ5iig0F20wJp-3QbJTESxJQH3jbwU-M4vg3lEroRo/exec?&handle=" + senderHandle;
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            string message = response.result.message;
+            string formattedMessage = message.Replace("{{target}}", target);
+            result.Add(formattedMessage);
             return result;
         }
 
