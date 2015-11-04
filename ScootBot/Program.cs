@@ -176,7 +176,10 @@ namespace ScootBot
                     result.Add(Quotes.spaceResults[random.Next(Quotes.spaceResults.Length)]);
                     break;
                 case "swiftsay":
-                    result.Add(SwiftSay());
+                    result.Add(TwitterSay("swiftonsecurity"));
+                    break;
+                case "wolfsay":
+                    result.Add(TwitterSay("wolfpupy"));
                     break;
                 case "jukebox":
                     result.Add(JukeBox());
@@ -274,9 +277,9 @@ namespace ScootBot
             msg.Chat.SendMessage(String.Join("\n", result));
         }
 
-        private static string SwiftSay()
+        private static string TwitterSay(string screenName)
         {
-            string url = "https://script.google.com/macros/s/AKfycbxJhcuk6P6JG0B1YzofwNUoWSQ8yQ-QGvcgcDfloQqF5Vc1JBw/exec";
+            string url = "https://script.google.com/macros/s/AKfycbxp3dUssGjF44DKknubVoPeunGYMo3YeOFTRajtQimdeIiD1jM/exec?&screen_name=" + screenName;
             string jsonResponse = GetJSONData(url);
             dynamic response = JsonConvert.DeserializeObject(jsonResponse);
             dynamic tweetlist = response.result;
