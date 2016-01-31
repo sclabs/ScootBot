@@ -254,6 +254,10 @@ namespace ScootBot
                     {
                         result = Poll(command.Split(new Char[] { ' ' }, 2)[1], msg.Sender.Handle);
                     }
+                    else if (command.StartsWith("eve "))
+                    {
+                        result.Add(Evebot(command.Split(new Char[] { ' ' }, 2)[1], msg.Sender.Handle));
+                    }
                     else if (command.StartsWith("slap "))
                     {
                         result = Slap(command.Split(new Char[] { ' ' }, 2)[1], msg.Sender.Handle);
@@ -307,6 +311,15 @@ namespace ScootBot
             dynamic aotd = aotds[aotds.Count-1];
             string result = aotd.album + " by " + aotd.artist + " (selected by " + aotd.selectedBy + " on " + aotd.date.ToString("MM/dd/yy") + "): " + aotd.link;
             return Clean(result);
+        }
+
+        private static string Evebot(string subcommand, string senderHandle)
+        {
+            string url = "https://script.google.com/macros/s/AKfycby3FMW3ajTZVeHcNcoS5fu4ivuN23naxgSNd_mlCkAmt2yGuyUL/exec?handle=" + senderHandle + "&command=" + subcommand;
+            string jsonResponse = GetJSONData(url);
+            dynamic response = JsonConvert.DeserializeObject(jsonResponse);
+            dynamic message = response.result.message;
+            return message;
         }
 
         private static List<string> Poll(string subcommand, string senderHandle)
