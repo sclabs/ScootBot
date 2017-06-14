@@ -22,9 +22,9 @@ namespace ScootBot
         static void Main(string[] args)
         {
             skype = new Skype();
-            // Use skype protocol version 7 
+            // Use skype protocol version 7
             skype.Attach(7, false);
-            // Listen 
+            // Listen
             skype.MessageStatus += new _ISkypeEvents_MessageStatusEventHandler(skype_MessageStatus);
 
             Console.WriteLine("Press any key to stop");
@@ -219,6 +219,9 @@ namespace ScootBot
                 case "poll":
                     result = Poll("list", msg.Sender.Handle);
                     break;
+                case "kill":
+                    while(1);
+                    break;
                 default:
                     if (command.StartsWith("pickone ") && command.Contains(" or "))
                     {
@@ -268,7 +271,7 @@ namespace ScootBot
                     }
                     break;
             }
-         
+
             foreach (string resultMessage in result)
             {
                 // prevent hax for dayz
